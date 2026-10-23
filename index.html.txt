@@ -95,7 +95,7 @@
 
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
                     Hi, I'm <br class="hidden lg:block"/>
-                    <span class="gradient-text">Michael Wilfrid Angelo</span>
+                    <span class="gradient-text">Michael </span>
                 </h1>
                 <h2 class="text-2xl sm:text-3xl font-semibold text-slate-400 mb-6">Virtual Assistant & IT/System Administrator</h2>
                 <p class="text-lg text-slate-400 mb-10 max-w-2xl mx-auto lg:mx-0">
