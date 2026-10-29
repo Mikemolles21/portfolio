@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Michael Molles - Portfolio</title>
+    <title>Michael Molles | Portfolio</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config for Custom Colors/Fonts -->
     <script>
         tailwind.config = {
             theme: {
@@ -15,417 +23,496 @@
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#06b6d4', // cyan-500
-                        secondary: '#3b82f6', // blue-500
-                        darkbg: '#0f172a', // slate-900
-                        cardbg: '#1e293b', // slate-800
+                        brand: {
+                            light: '#60a5fa', // blue-400
+                            DEFAULT: '#3b82f6', // blue-500
+                            dark: '#2563eb', // blue-600
+                        }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .gradient-text {
-            background: linear-gradient(to right, #06b6d4, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Custom Scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .gradient-bg {
-            background: linear-gradient(to right, #06b6d4, #3b82f6);
+        ::-webkit-scrollbar-track {
+            background: rgba(17, 24, 39, 0.8); 
         }
-        .timeline-dot {
-            position: absolute;
-            left: -33px;
-            top: 5px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #06b6d4;
-            border: 4px solid #0f172a;
+        ::-webkit-scrollbar-thumb {
+            background: rgba(75, 85, 99, 0.8); 
+            border-radius: 10px;
         }
-        .timeline-line {
-            position: absolute;
-            left: -26px;
-            top: 20px;
-            bottom: -30px;
-            width: 2px;
-            background: #334155; /* slate-700 */
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(107, 114, 128, 0.8); 
+        }
+
+        /* Glassmorphism utility class for reuse */
+        .glass-panel {
+            background-color: rgba(17, 24, 39, 0.7); /* bg-gray-900/70 */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(75, 85, 99, 0.5); /* border-gray-700 */
         }
     </style>
 </head>
-<body class="bg-darkbg text-slate-300 antialiased overflow-x-hidden">
+<body class="text-gray-200 font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-white">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 bg-darkbg/90 backdrop-blur-md border-b border-slate-800">
+    <!-- Video Background -->
+    <video autoplay loop muted playsinline class="fixed right-0 bottom-0 min-w-full min-h-full -z-10 object-cover">
+        <source src="bg-video.mp4" type="video/mp4">
+    </video>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0 border-b border-gray-700/50 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0 font-bold text-xl text-white tracking-wider">
-                    M<span class="text-primary">.</span>M
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <span class="font-bold text-xl tracking-wider text-white">MM<span class="text-brand-light">.</span></span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="hover:text-primary transition px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#about" class="hover:text-primary transition px-3 py-2 rounded-md text-sm font-medium">About</a>
-                        <a href="#skills" class="hover:text-primary transition px-3 py-2 rounded-md text-sm font-medium">Expertise</a>
-                        <a href="#experience" class="hover:text-primary transition px-3 py-2 rounded-md text-sm font-medium">Experience</a>
-                        <a href="#contact" class="hover:text-primary transition px-3 py-2 rounded-md text-sm font-medium">Contact</a>
-                    </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#about" class="text-gray-300 hover:text-white hover:text-brand-light transition px-3 py-2 text-sm font-medium">About</a>
+                    <a href="#experience" class="text-gray-300 hover:text-white hover:text-brand-light transition px-3 py-2 text-sm font-medium">Experience</a>
+                    <a href="#trainings" class="text-gray-300 hover:text-white hover:text-brand-light transition px-3 py-2 text-sm font-medium">Trainings</a>
+                    <a href="#education" class="text-gray-300 hover:text-white hover:text-brand-light transition px-3 py-2 text-sm font-medium">Education</a>
                 </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-gray-700/50">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about" class="block text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md px-3 py-2 text-base font-medium mobile-link">About</a>
+                <a href="#experience" class="block text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md px-3 py-2 text-base font-medium mobile-link">Experience</a>
+                <a href="#trainings" class="block text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md px-3 py-2 text-base font-medium mobile-link">Trainings</a>
+                <a href="#education" class="block text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-md px-3 py-2 text-base font-medium mobile-link">Education</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div class="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
-            <div class="w-full lg:w-3/5 text-center lg:text-left">
-                <p class="text-primary font-semibold tracking-wide uppercase mb-3">Welcome to my portfolio</p>
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-                    Hi, I'm <br class="hidden lg:block"/>
-                    <span class="gradient-text">Michael Wilfrid Angelo</span>
-                </h1>
-                <h2 class="text-2xl sm:text-3xl font-semibold text-slate-400 mb-6">Virtual Assistant & IT/System Administrator</h2>
-                <p class="text-lg text-slate-400 mb-10 max-w-2xl mx-auto lg:mx-0">
-                    Delivering top-tier technical support, system administration, and administrative excellence with a proven track record in high-security and fast-paced environments.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#contact" class="gradient-bg text-white px-8 py-3 rounded-full font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition transform hover:-translate-y-1">
-                        Hire Me
-                    </a>
-                    <a href="#experience" class="bg-cardbg border border-slate-700 text-white px-8 py-3 rounded-full font-semibold hover:bg-slate-700 transition">
-                        View Experience
-                    </a>
-                </div>
-            </div>
-            <div class="w-full sm:w-2/3 lg:w-2/5 flex justify-center">
-                <div class="relative">
-                    <div class="absolute inset-0 gradient-bg rounded-full blur-2xl opacity-30 animate-pulse"></div>
-                    <img src="https://i.ibb.co/Y4mmGBPF/a2d51e36-aa0d-4980-8847-5c7c48201130.jpg" alt="Michael Molles" class="relative w-64 h-64 sm:w-80 sm:h-80 object-cover rounded-full border-4 border-slate-800 shadow-2xl z-10">
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Main Content Container -->
+    <main class="relative z-10 pt-16">
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-slate-800/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white sm:text-4xl">About Me</h2>
-                <div class="w-20 h-1 gradient-bg mx-auto mt-4 rounded"></div>
-            </div>
-            <div class="bg-cardbg border border-slate-700 rounded-2xl p-8 lg:p-12 shadow-xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 -mr-16 -mt-16 text-slate-700/30 text-9xl">
-                    <i class="fas fa-quote-right"></i>
-                </div>
-                <p class="text-lg lg:text-xl text-slate-300 leading-relaxed relative z-10">
-                    Previously a System Administrator for 5 years managing various devices like computers, CCTV and operating Access Control and Event Management tools like CCure 9000 and Matrix V. Knowledgeable in CCTV systems and trained in Video Review Services. Experienced in operating Security Systems in high-rise buildings. Capable of writing detailed reports, presentations, and handling CCTV Installation projects.
-                </p>
-                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm font-medium">
-                    <div class="bg-darkbg p-4 rounded-lg border border-slate-700 text-center">
-                        <span class="block text-slate-400 mb-1">Age</span>
-                        <span class="text-white text-lg">31</span>
-                    </div>
-                    <div class="bg-darkbg p-4 rounded-lg border border-slate-700 text-center">
-                        <span class="block text-slate-400 mb-1">Location</span>
-                        <span class="text-white text-lg">Quezon City</span>
-                    </div>
-                    <div class="bg-darkbg p-4 rounded-lg border border-slate-700 text-center">
-                        <span class="block text-slate-400 mb-1">Experience</span>
-                        <span class="text-white text-lg">10+ Years</span>
-                    </div>
-                    <div class="bg-darkbg p-4 rounded-lg border border-slate-700 text-center">
-                        <span class="block text-slate-400 mb-1">Availability</span>
-                        <span class="text-white text-lg">Open</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Expertise Section -->
-    <section id="skills" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white sm:text-4xl">Core Expertise</h2>
-                <div class="w-20 h-1 gradient-bg mx-auto mt-4 rounded"></div>
-                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">Technical and administrative skills honed over years of diverse professional experience.</p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <!-- Skill Card -->
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-microchip text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">Computer Hardware</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-video text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">CCTV Systems</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-shield-halved text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">CCure 9000 & Access</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-file-video text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">Video Review Services</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-project-diagram text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">Project Management</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-chalkboard-user text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">Presentations</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fas fa-file-lines text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">Report Writing</h3>
-                </div>
-                <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-primary transition group text-center">
-                    <div class="w-14 h-14 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition duration-300">
-                        <i class="fab fa-microsoft text-2xl text-primary"></i>
-                    </div>
-                    <h3 class="text-white font-semibold">MS Office Suite</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience & Training Section -->
-    <section id="experience" class="py-20 bg-slate-800/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <!-- HERO SECTION -->
+        <section id="about" class="min-h-[90vh] flex items-center justify-center py-20 px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 max-w-4xl w-full text-center shadow-2xl transform transition-all hover:scale-[1.01] duration-500">
                 
-                <!-- Experience Timeline -->
-                <div class="lg:col-span-2">
-                    <h2 class="text-3xl font-bold text-white mb-10 flex items-center">
-                        <i class="fas fa-briefcase text-primary mr-4"></i> Work Experience
-                    </h2>
-                    
-                    <div class="relative pl-8">
-                        <!-- Item 1 -->
-                        <div class="relative mb-12">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-line"></div>
-                            <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-slate-500 transition">
-                                <span class="text-sm font-semibold text-primary mb-2 block">May 2024 - Oct 2024</span>
-                                <h3 class="text-xl font-bold text-white">TSR Blended Support</h3>
-                                <h4 class="text-slate-400 mb-4 font-medium">Concentrix</h4>
-                                <ul class="list-disc list-inside text-slate-400 space-y-2 text-sm">
-                                    <li>Fixed tech issues encountered by customers regarding the App/website.</li>
-                                    <li>Walkthrough customers in navigating apps, making payments, catering brands like Disney+, Hulu, ESPN+.</li>
-                                    <li>Explained features of services to customers clearly and effectively.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Item 2 -->
-                        <div class="relative mb-12">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-line"></div>
-                            <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-slate-500 transition">
-                                <span class="text-sm font-semibold text-primary mb-2 block">2017 - 2023</span>
-                                <h3 class="text-xl font-bold text-white">IT/System Administrator</h3>
-                                <h4 class="text-slate-400 mb-4 font-medium">TriMegaforce Security</h4>
-                                <ul class="list-disc list-inside text-slate-400 space-y-2 text-sm">
-                                    <li>Managed database of employee access and badge requests.</li>
-                                    <li>Managed CCTV VMS and Network Video Recorder (American Dynamics Video Edge).</li>
-                                    <li>Maintained Door Access Control Panel and equipment; generated Headcount Reports (Ccure 9000).</li>
-                                    <li>Managed critical access to server and hub rooms through PIN and Security Software.</li>
-                                    <li>Troubleshot and repaired Computer Hardware, DACS, & CCTV.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Item 3 -->
-                        <div class="relative mb-12">
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-line"></div>
-                            <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-slate-500 transition">
-                                <span class="text-sm font-semibold text-primary mb-2 block">Nov 2021 - June 2022</span>
-                                <h3 class="text-xl font-bold text-white">Customer Service Agent (Financial)</h3>
-                                <h4 class="text-slate-400 mb-4 font-medium">Sykes Asia</h4>
-                                <ul class="list-disc list-inside text-slate-400 space-y-2 text-sm">
-                                    <li>Handled Inbound/Outbound Calls assisting customers with payments or card access.</li>
-                                    <li>Offered Hardship Assistance to customers impacted by Covid-19 and medical emergencies.</li>
-                                    <li>Collected payments for delinquent accounts.</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Item 4 -->
-                        <div class="relative">
-                            <div class="timeline-dot"></div>
-                            <div class="bg-cardbg p-6 rounded-xl border border-slate-700 hover:border-slate-500 transition">
-                                <span class="text-sm font-semibold text-primary mb-2 block">2014 - 2017</span>
-                                <h3 class="text-xl font-bold text-white">HR Assistant</h3>
-                                <h4 class="text-slate-400 mb-4 font-medium">ESA Employment Specialist Corp.</h4>
-                                <ul class="list-disc list-inside text-slate-400 space-y-2 text-sm">
-                                    <li>Encoded 201 files of employees and tracked employee contracts.</li>
-                                    <li>Attended Job Fairs, handled applicant pooling and briefings.</li>
-                                    <li>Issued memos and documented disciplinary actions.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Profile Image -->
+                <div class="relative w-40 h-40 mx-auto mb-8">
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-brand-light to-emerald-400 animate-pulse blur-md opacity-70"></div>
+                    <!-- Fallback mechanism applied to the image src -->
+                    <img src="https://ibb.co/fVff7dqz" 
+                         onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Michael+Molles&background=111827&color=60a5fa&size=256&bold=true';" 
+                         alt="Michael Molles" 
+                         class="relative w-40 h-40 rounded-full object-cover border-4 border-gray-800 shadow-xl z-10">
                 </div>
 
-                <!-- Training Sidebar -->
+                <!-- Name & Title -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight">
+                    MICHAEL WILFRID ANGELO O. MOLLES
+                </h1>
+                <h2 class="text-lg md:text-xl text-brand-light font-medium mb-8">
+                    Security Systems Admin <span class="text-gray-500 mx-2">|</span> CCTV Monitoring Officer <span class="text-gray-500 mx-2">|</span> Virtual Assistant
+                </h2>
+
+                <!-- Contact Info Grid -->
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-sm md:text-base text-gray-300">
+                    <a href="tel:09277082012" class="flex items-center hover:text-white transition">
+                        <i class="fas fa-phone-alt text-brand-light mr-2"></i> 09277082012
+                    </a>
+                    <a href="mailto:michaelmolles3@gmail.com" class="flex items-center hover:text-white transition">
+                        <i class="fas fa-envelope text-brand-light mr-2"></i> michaelmolles3@gmail.com
+                    </a>
+                    <span class="flex items-center">
+                        <i class="fas fa-map-marker-alt text-brand-light mr-2"></i> Quezon City, Metro Manila
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- WORK EXPERIENCE SECTION -->
+        <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 inline-block relative">
+                        Work Experience
+                        <div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brand-light rounded"></div>
+                    </h2>
+                </div>
+
+                <!-- Experience Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1 -->
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <div class="mb-4">
+                            <span class="inline-block px-3 py-1 bg-brand-light/20 text-brand-light text-xs font-semibold rounded-full mb-3 border border-brand-light/30">
+                                Jan 2025 - Present
+                            </span>
+                            <h3 class="text-xl font-bold text-white leading-tight">CCTV Operator / Monitoring Officer</h3>
+                            <p class="text-gray-400 text-sm mt-1 font-medium"><i class="fas fa-building mr-2"></i>Megaforce Security Ateneo De Manila</p>
+                        </div>
+                        <ul class="text-gray-300 text-sm space-y-2 list-none flex-grow">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Directly reports to Assistant Detachment Commander in monitoring night shift guards.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Coordinating with "on ground" security guards, K9 & EMT about progression of on-going event & situation via Radio/phone.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Footage review and evidence retrieval through searching for saved videos in the NVR.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Regular checking of all camera function and recording loss for proper immediate repair.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <div class="mb-4">
+                            <span class="inline-block px-3 py-1 bg-gray-700 text-gray-300 text-xs font-semibold rounded-full mb-3 border border-gray-600">
+                                May 2024 - Oct 2024
+                            </span>
+                            <h3 class="text-xl font-bold text-white leading-tight">Advisor I (Blended)</h3>
+                            <p class="text-gray-400 text-sm mt-1 font-medium"><i class="fas fa-building mr-2"></i>Concentrix UP Technohub</p>
+                        </div>
+                        <ul class="text-gray-300 text-sm space-y-2 list-none flex-grow">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Fixing tech issues encountered by customers regarding app/website.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Walkthrough clients in navigating streaming apps and making payments.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Guiding clients to suitable subscription plans based on their needs.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Provide timely updates about changes in services and prices.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <div class="mb-4">
+                            <span class="inline-block px-3 py-1 bg-gray-700 text-gray-300 text-xs font-semibold rounded-full mb-3 border border-gray-600">
+                                July 2017 - Oct 2023
+                            </span>
+                            <h3 class="text-xl font-bold text-white leading-tight">Security System Admin</h3>
+                            <p class="text-gray-400 text-sm mt-1 font-medium"><i class="fas fa-building mr-2"></i>Megaforce Security (P&G, One Serendra)</p>
+                        </div>
+                        <ul class="text-gray-300 text-sm space-y-2 list-none flex-grow">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Managing Access control via RFID for employees, contractors, and visitors.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Managing CCTV system, Door access, and turnstiles including maintenance coordination.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Managing critical access to server rooms and temperature monitoring (BMS & FDAS).</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Troubleshooting technical security system issues and supervising civil works.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <div class="mb-4">
+                            <span class="inline-block px-3 py-1 bg-gray-700 text-gray-300 text-xs font-semibold rounded-full mb-3 border border-gray-600">
+                                Nov 2021 - June 2022
+                            </span>
+                            <h3 class="text-xl font-bold text-white leading-tight">Customer Service Agent</h3>
+                            <p class="text-gray-400 text-sm mt-1 font-medium"><i class="fas fa-building mr-2"></i>Sykes Asia (Foundever)</p>
+                        </div>
+                        <ul class="text-gray-300 text-sm space-y-2 list-none flex-grow">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Handle Inbound/outbound calls assisting customers with credit card payments.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Update account information and process online payments.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Answering FAQs regarding credit card services, benefits, and interest rates.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Processing fraudulent charges and verifying active subscriptions.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <div class="mb-4">
+                            <span class="inline-block px-3 py-1 bg-gray-700 text-gray-300 text-xs font-semibold rounded-full mb-3 border border-gray-600">
+                                2014 - 2017
+                            </span>
+                            <h3 class="text-xl font-bold text-white leading-tight">HR Officer</h3>
+                            <p class="text-gray-400 text-sm mt-1 font-medium"><i class="fas fa-building mr-2"></i>ESA Employment Specialist Corp.</p>
+                        </div>
+                        <ul class="text-gray-300 text-sm space-y-2 list-none flex-grow">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Orientation of newly hired employees; explained contracts and deductions.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Due process sanctioning of employee violations and documentation.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Handled government compliances of the company.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Conducted job fair interviews and routine store inspections with clients.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col hover:-translate-y-2 transition-transform duration-300 shadow-lg">
+                        <div class="mb-4">
+                            <span class="inline-block px-3 py-1 bg-gray-700 text-gray-300 text-xs font-semibold rounded-full mb-3 border border-gray-600">
+                                Jan 2013 - May 2014
+                            </span>
+                            <h3 class="text-xl font-bold text-white leading-tight">Service Crew</h3>
+                            <p class="text-gray-400 text-sm mt-1 font-medium"><i class="fas fa-building mr-2"></i>Mc Mary's Food Corp.</p>
+                        </div>
+                        <ul class="text-gray-300 text-sm space-y-2 list-none flex-grow">
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Ensures a seamless dining experience by delivering friendly customer service.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Accurately preparing food orders in a fast-paced environment.</li>
+                            <li class="flex items-start"><i class="fas fa-chevron-right text-brand-light text-xs mt-1 mr-2 flex-shrink-0"></i> Maintaining strict cleanliness standards within the facility.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- TRAININGS & SEMINARS -->
+        <section id="trainings" class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 inline-block relative">
+                        Trainings & Seminars
+                        <div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brand-light rounded"></div>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-video text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">CCTV Operations and Management</h4>
+                            <p class="text-gray-400 text-sm">Right Eye Detective & Protective Services &bull; May 2025</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-shield-alt text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Basic Security Supervisory Course</h4>
+                            <p class="text-gray-400 text-sm">Intensity C Security Training Center &bull; Sep 2023</p>
+                        </div>
+                    </div>
+
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-user-shield text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">In-Service Enhancement Security Training</h4>
+                            <p class="text-gray-400 text-sm">Intensity C Security Training Center &bull; Sep 2023</p>
+                        </div>
+                    </div>
+
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-laptop-house text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Basic Virtual Assistant Training</h4>
+                            <p class="text-gray-400 text-sm">VA Training Philippines &bull; April 2022</p>
+                        </div>
+                    </div>
+
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-users text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">One Mega Seminar</h4>
+                            <p class="text-gray-400 text-sm">Megaforce Security &bull; Jan 2020</p>
+                        </div>
+                    </div>
+
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-store text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Handling of Store Operation</h4>
+                            <p class="text-gray-400 text-sm">ESA Employment &bull; Aug 2016</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Training Item -->
+                    <div class="glass-panel rounded-xl p-5 flex items-center shadow border-l-4 border-l-brand-light md:col-span-2 lg:col-span-1">
+                        <div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mr-4 flex-shrink-0">
+                            <i class="fas fa-handshake text-brand-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold text-lg">Employer's Forum & Consultation</h4>
+                            <p class="text-gray-400 text-sm">Taguig City &bull; June 2016</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION & PERSONAL INFO SECTION -->
+        <section id="education" class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Education -->
                 <div>
-                    <h2 class="text-3xl font-bold text-white mb-10 flex items-center">
-                        <i class="fas fa-certificate text-primary mr-4"></i> Trainings
-                    </h2>
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-bold text-white mb-4 inline-block relative">
+                            Education
+                            <div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brand-light rounded"></div>
+                        </h2>
+                    </div>
                     
-                    <div class="space-y-6">
-                        <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl border border-slate-700 shadow-lg">
-                            <div class="flex items-start">
-                                <div class="bg-slate-700 p-3 rounded-lg mr-4">
-                                    <i class="fas fa-laptop-house text-xl text-primary"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold text-white text-lg">Basic Virtual Assistant Training</h3>
-                                    <p class="text-primary text-sm font-medium mt-1">VA Training Philippines</p>
-                                    <p class="text-slate-400 text-sm mt-2"><i class="far fa-calendar-alt mr-2"></i> April 2022</p>
-                                </div>
+                    <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-600 before:to-transparent">
+                        
+                        <!-- College -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 bg-gray-900 glass-panel shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 text-brand-light">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-5 rounded-xl">
+                                <span class="text-brand-light text-sm font-semibold">2010 - 2012</span>
+                                <h4 class="text-white font-bold text-lg mt-1">Quezon City Polytechnic University</h4>
+                                <p class="text-gray-400 text-sm mt-2">Computer Programming (1 year) & Computer Hardware Servicing (Vocational)</p>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl border border-slate-700 shadow-lg">
-                            <div class="flex items-start">
-                                <div class="bg-slate-700 p-3 rounded-lg mr-4">
-                                    <i class="fas fa-tools text-xl text-primary"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold text-white text-lg">NC II Computer Hardware Servicing</h3>
-                                    <p class="text-primary text-sm font-medium mt-1">TESDA - NCR</p>
-                                    <p class="text-slate-400 text-sm mt-2"><i class="far fa-calendar-alt mr-2"></i> March 2012</p>
-                                </div>
+                        <!-- High School -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 bg-gray-900 glass-panel shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 text-brand-light">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-5 rounded-xl">
+                                <span class="text-brand-light text-sm font-semibold">2005 - 2009</span>
+                                <h4 class="text-white font-bold text-lg mt-1">Manuel Roxas High School</h4>
+                                <p class="text-gray-400 text-sm mt-2">Secondary Education, Quezon City</p>
                             </div>
                         </div>
-                        
-                        <div class="bg-cardbg p-6 rounded-xl border border-slate-700 shadow-lg mt-8 text-center">
-                             <div class="w-16 h-16 mx-auto bg-slate-800 rounded-full flex items-center justify-center mb-4 border border-slate-600">
-                                <i class="fas fa-graduation-cap text-2xl text-slate-400"></i>
+
+                        <!-- Elementary -->
+                        <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                            <div class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-600 bg-gray-900 glass-panel shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 text-brand-light">
+                                <i class="fas fa-book"></i>
                             </div>
-                            <h4 class="text-white font-medium mb-2">Continuous Learner</h4>
-                            <p class="text-sm text-slate-400">"Willing to learn and adapt to changes and acquire new knowledge to be able to fit to my desired job."</p>
+                            <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-panel p-5 rounded-xl">
+                                <span class="text-brand-light text-sm font-semibold">1999 - 2005</span>
+                                <h4 class="text-white font-bold text-lg mt-1">San Vicente Elementary School</h4>
+                                <p class="text-gray-400 text-sm mt-2">Primary Education, Quezon City</p>
+                            </div>
                         </div>
+
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-white sm:text-4xl">Get In Touch</h2>
-                <div class="w-20 h-1 gradient-bg mx-auto mt-4 rounded"></div>
-                <p class="mt-4 text-slate-400 max-w-2xl mx-auto">Looking for a reliable Virtual Assistant or System Administrator? Let's connect.</p>
-            </div>
+                <!-- Personal Info -->
+                <div>
+                    <div class="mb-10">
+                        <h2 class="text-3xl font-bold text-white mb-4 inline-block relative">
+                            Personal Information
+                            <div class="absolute -bottom-2 left-0 w-1/2 h-1 bg-brand-light rounded"></div>
+                        </h2>
+                    </div>
 
-            <div class="bg-cardbg rounded-2xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col md:flex-row">
-                <!-- Contact Info -->
-                <div class="w-full md:w-2/5 p-8 lg:p-12 bg-slate-800 relative">
-                    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#06b6d4 1px, transparent 1px); background-size: 20px 20px;"></div>
-                    <div class="relative z-10">
-                        <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
-                        
-                        <div class="space-y-8 mt-8">
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 rounded-full bg-darkbg flex items-center justify-center flex-shrink-0 border border-slate-600">
-                                    <i class="fas fa-phone text-primary"></i>
-                                </div>
-                                <div class="ml-4 pt-1">
-                                    <p class="text-sm text-slate-400 font-medium">Call Me</p>
-                                    <a href="tel:+639472621190" class="text-white font-semibold text-lg hover:text-primary transition">+63 947 262 1190</a>
-                                </div>
-                            </div>
+                    <div class="glass-panel rounded-2xl p-8 shadow-xl">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-4">
                             
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 rounded-full bg-darkbg flex items-center justify-center flex-shrink-0 border border-slate-600">
-                                    <i class="fas fa-envelope text-primary"></i>
-                                </div>
-                                <div class="ml-4 pt-1">
-                                    <p class="text-sm text-slate-400 font-medium">Email Me</p>
-                                    <a href="mailto:michaelmolles3@gmail.com" class="text-white font-semibold text-lg hover:text-primary transition break-all">michaelmolles3@gmail.com</a>
-                                </div>
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Date of Birth</p>
+                                <p class="text-white text-lg font-semibold flex items-center">
+                                    <i class="fas fa-birthday-cake text-brand-light mr-3 w-5"></i> January 19, 1993
+                                </p>
                             </div>
 
-                            <div class="flex items-start">
-                                <div class="w-12 h-12 rounded-full bg-darkbg flex items-center justify-center flex-shrink-0 border border-slate-600">
-                                    <i class="fas fa-location-dot text-primary"></i>
-                                </div>
-                                <div class="ml-4 pt-1">
-                                    <p class="text-sm text-slate-400 font-medium">Location</p>
-                                    <p class="text-white font-semibold text-lg">Quezon City, Metro Manila</p>
-                                </div>
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Age</p>
+                                <p class="text-white text-lg font-semibold flex items-center">
+                                    <i class="fas fa-hourglass-half text-brand-light mr-3 w-5"></i> 33 years old
+                                </p>
                             </div>
+
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Height</p>
+                                <p class="text-white text-lg font-semibold flex items-center">
+                                    <i class="fas fa-ruler-vertical text-brand-light mr-3 w-5"></i> 5'8"
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Civil Status</p>
+                                <p class="text-white text-lg font-semibold flex items-center">
+                                    <i class="fas fa-ring text-brand-light mr-3 w-5"></i> Married
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Religion</p>
+                                <p class="text-white text-lg font-semibold flex items-center">
+                                    <i class="fas fa-church text-brand-light mr-3 w-5"></i> Roman Catholic
+                                </p>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <p class="text-gray-400 text-sm font-medium uppercase tracking-wider mb-1">Birthplace</p>
+                                <p class="text-white text-lg font-semibold flex items-center">
+                                    <i class="fas fa-map-marker-alt text-brand-light mr-3 w-5"></i> Pagadian City, Zamboanga Del Sur
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="mt-8 pt-6 border-t border-gray-700/50">
+                            <p class="text-sm text-gray-400 italic text-center">
+                                "I hereby certify that all information indicated above is true and correct to the best of my knowledge."
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contact Form UI -->
-                <div class="w-full md:w-3/5 p-8 lg:p-12">
-                    <form onsubmit="event.preventDefault(); alert('Message sent successfully! (This is a UI demo)');" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-400 mb-2">Your Name</label>
-                                <input type="text" required class="w-full bg-darkbg border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="John Doe">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-400 mb-2">Your Email</label>
-                                <input type="email" required class="w-full bg-darkbg border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="john@example.com">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-400 mb-2">Subject</label>
-                            <input type="text" required class="w-full bg-darkbg border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="Job Opportunity">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-400 mb-2">Message</label>
-                            <textarea rows="4" required class="w-full bg-darkbg border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition resize-none" placeholder="Hello Michael..."></textarea>
-                        </div>
-                        <button type="submit" class="w-full gradient-bg text-white font-bold py-4 rounded-lg shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 transition duration-300">
-                            Send Message <i class="fas fa-paper-plane ml-2"></i>
-                        </button>
-                    </form>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-950 py-8 border-t border-slate-800 text-center">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-            <div class="font-bold text-2xl text-white tracking-wider mb-4">
-                M<span class="text-primary">.</span>M
+        <!-- Footer -->
+        <footer class="glass-panel border-t-0 border-t border-gray-700/50 py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-4 flex flex-col items-center justify-center">
+                <span class="font-bold text-xl tracking-wider text-white mb-2">MM<span class="text-brand-light">.</span></span>
+                <p class="text-gray-400 text-sm">&copy; 2026 Michael Wilfrid Angelo O. Molles. All rights reserved.</p>
             </div>
-            <p class="text-slate-500 text-sm">
-                &copy; <span id="year"></span> Michael Wilfrid Angelo Molles. All rights reserved.
-            </p>
-        </div>
-    </footer>
+        </footer>
 
+    </main>
+
+    <!-- Interactive Scripts -->
     <script>
-        // Set current year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Navbar blur effect on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg', 'bg-gray-900/90');
+                navbar.classList.remove('bg-gray-900/70');
+            } else {
+                navbar.classList.add('bg-gray-900/70');
+                navbar.classList.remove('shadow-lg', 'bg-gray-900/90');
+            }
+        });
     </script>
 </body>
 </html>
